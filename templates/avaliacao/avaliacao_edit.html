@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block head_title %} Critério de avaliação {% endblock head_title %}
+
+{% block contentdash %}
+    <div class="d-flex justify-content-between">
+        <h4>Informações do item</h4>
+    </div>
+    <hr>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                {{ avaliacao_form.as_p }}
+            </div>
+            <!--<div class="col">
+                <label for="id_arquivo">Anexar documento:</label>
+                <input type="file" class="form-control" name="arquivo" id="id_arquivo">
+            </div>-->
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a href="{% url 'avaliacao' %}" class="btn btn-danger">Cancelar</a>
+        </div>
+    </form>
+{% endblock contentdash %}

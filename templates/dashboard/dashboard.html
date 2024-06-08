@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load permission_tags %}
+
+{% block head_title %} Dashboard {% endblock head_title %}
+
+{% block contentdash %}
+    <div class="d-flex justify-content-between">
+        <h4><b>ITMpe</b> - Dashboard</h4>
+    </div>
+    <hr>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <p><b>Relatório Prefeitura</b></p>
+                <p>Critérios registrados: {{ criterios_len }}</p>
+                <p>Avaliações registradas: {{ avaliacoes_len }}</p>
+                <p>Movimentações executadas: {{ avaliacoeslog_len }}</p>
+            </div>
+
+            <div class="col">
+                <p><b>Relatório: Secretaria de {{ sec }}</b></p>
+                <p>Critérios registrados: {{ criterio_sec }}</p>
+                <p>Avaliações registradas: {{ avaliacao_sec }}</p>
+                <p>Movimentações executadas: {{ avaliacao_log_sec }}</p>
+            </div>
+        
+        </div>
+    </div>
+{% endblock contentdash %}

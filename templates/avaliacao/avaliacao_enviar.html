@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load permission_tags %}
+
+{% block head_title %} Critério de avaliação {% endblock head_title %}
+
+{% block contentdash %}
+    <div class="d-flex justify-content-between">
+        <h4>Informações do item</h4>
+    </div>
+    <hr>
+    <div class="row">
+        <form class="col">
+            {% csrf_token %}
+            {{ avaliacao_form.as_p }}
+        </form>
+        <form class="col" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="id_arquivo">Anexar documento:</label>
+                <input type="file" class="form-control" name="arquivo" id="id_arquivo">
+            </div>
+            <div>
+                <label for="id_anotacao">Inserir anotação:</label>
+                <textarea class="form-control" rows="5" name="anotacao" id="id_anotacao"></textarea>
+            </div>
+
+            {% if user|has_role:'controle' %}
+                <div>
+                    <label for="id_status_controle">Status:</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status_controle" id="status_Publicado" value="Publicado" required>
+                        <label class="form-check-label" for="status_Publicado">Publicado</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status_controle" id="status_Pendente" value="Pendente" required>
+                        <label class="form-check-label" for="status_Pendente">Pendente</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status_controle" id="status_Analise" value="Em análise" required>
+                        <label class="form-check-label" for="status_Analise">Análise</label>
+                    </div>
+                </div>
+            {% endif %}
+            <div style="padding-top: 0.5rem;">
+                <button type="submit" class="btn btn-success btn-sm">Anexar</button>
+                <a href="{% url 'avaliacao' %}" class="btn btn-danger btn-sm">Cancelar</a>
+            </div>
+        </form>
+    </div>
+    <br>
+    <div class="card d-flex justify-content-between table-responsive">
+        <table class="table table-striped table-hover table-sm ">
+            <thead>
+                <tr>
+                    <th scope="col">Data e Hora</th>
+                    <th scope="col">Anotação</th>
+                    <th scope="col">Arquivo</th>
+                    <th scope="col">Enviado por</th>
+                    {% if user|has_role:'controle' %}
+                        <th scope="col">Ações</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in avaliacao_log_hist %}
+                    <tr>
+                        <td>{{ log.dataehora }}</td>
+                        <td>{{ log.anotacao }}</td>
+                        <td>
+                            {% if log.arquivo %}
+                                <a href="/media/{{ log.arquivo }}" class="btn-sm"><i class="lni lni-folder"></i> Visualizar anexo</a>
+                            {% endif %}
+                        </td>
+                        <td>{{ log.usuario }}</td>
+                        {% if user|has_role:'controle' %}
+                            <td>
+                                <a href="{% url 'avaliacao_log_delet' log.avaliacao.id log.id %}" class="btn btn-success btn-sm"><i class="lni lni-trash-can"></i></a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock contentdash %}

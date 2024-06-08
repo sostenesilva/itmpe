@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load permission_tags %}
+
+{% block head_title %} Critérios {% endblock head_title %}
+
+{% block contentdash %}
+    <div class="d-flex justify-content-between">
+        <h4><b>ITMpe</b> - Critérios</h4>
+        {% if user|has_role:'controle' %}
+            <a type="button" class="btn btn-success" href="{% url 'criterios_add' %}"><i class="lni lni-plus"></i></a>
+        {% endif %}
+    </div>
+    <hr>
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Critério</th>
+                <th scope="col">Dimensão</th>
+                <th scope="col">Periodicidade</th>
+                {% if user|has_role:'controle' %}
+                    <th scope="col">Ações</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for criterio in criterios %}
+                <tr>
+                    <td>{{ criterio.item }}</td>
+                    <td>{{ criterio.criterio }}</td>
+                    <td>{{ criterio.dimensao }}</td>
+                    <td>{{ criterio.periodicidade }}</td>
+                    {% if user|has_role:'controle' %}
+                        <td>
+                            <div class='btn-group btn-group-sm' role='group'>
+                                <a href="{% url 'criterios_edit' criterio.id %}" class="btn  btn-secondary"><i class="lni lni-cog"></i></a>
+                                <a href="{% url 'criterios_delet' criterio.id %}" class="btn btn-secondary"><i class="lni lni-eraser"></i></a>
+                            </div>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="wrapper justify-content-center">
+        <!--{% if bdirradiacao.has_previous %}
+            <a href="{% url 'banco_de_irradiacao' %}?page={{bdirradiacao.previous_page_number}}" style="margin-right: 30px;"><i class="lni lni-arrow-left"></i></a>
+        {% endif %}
+        <span>{{bdirradiacao.number}}</span>
+        {% if bdirradiacao.has_next %}
+            <a href="{% url 'banco_de_irradiacao' %}?page={{bdirradiacao.next_page_number}}" style="margin-left: 30px;"><i class="lni lni-arrow-right"></i></a>
+        {% endif %}-->
+    </div>
+
+{% endblock contentdash %}

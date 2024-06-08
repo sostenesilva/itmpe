@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block head_title %} Critério de avaliação {% endblock head_title %}
+
+{% block contentdash %}
+    <div class="d-flex justify-content-between">
+        <h4>Informações do item</h4>
+    </div>
+    <hr>
+    <form action="{% url 'criterios_add' %}" method="post">
+        {% csrf_token %}
+        {{ criterios_form.as_p }}
+        <div>
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a href="{% url 'criterios' %}" class="btn btn-danger">Cancelar</a>
+        </div>
+        </form>
+{% endblock contentdash %}
