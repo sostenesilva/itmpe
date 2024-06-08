@@ -17,4 +17,5 @@ urlpatterns = [
     path('controle/', views.controle, name='controle'),
     path('secadm/', views.secadm, name='secadm'),
     
+    path('enviar_email/', views.enviar_email, name='enviar_email')
 ]

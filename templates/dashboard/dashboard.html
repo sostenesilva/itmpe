@@ -10,6 +10,7 @@
     <hr>
     <div class="container-fluid">
         <div class="row">
+            <a type="button" class="btn btn-success" href="{% url 'enviar_email' %}"><i class="lni lni-plus"></i></a>
             <div class="col">
                 <p><b>Relatório Prefeitura</b></p>
                 <p>Critérios registrados: {{ criterios_len }}</p>
@@ -23,7 +24,6 @@
                 <p>Avaliações registradas: {{ avaliacao_sec }}</p>
                 <p>Movimentações executadas: {{ avaliacao_log_sec }}</p>
             </div>
-        
         </div>
     </div>
 {% endblock contentdash %}
