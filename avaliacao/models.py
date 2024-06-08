@@ -19,7 +19,7 @@ class Db_Criterios(models.Model):
 
 def diretorioItemAvaliacao(instance, filename): 
     # file will be uploaded to MEDIA_ROOT / user_<id>/<filename> 
-    return '{} - {}/{}/{}/{}'.format(instance.avaliacao.criterio.item,instance.avaliacao.criterio.criterio.replace('?','')[:30],instance.avaliacao.responsavel,instance.avaliacao.data_limite,filename)
+    return 'criterios/{} - {}/{}/{}/{}'.format(instance.avaliacao.criterio.item,instance.avaliacao.criterio.criterio.replace('?','')[:30],instance.avaliacao.responsavel,instance.avaliacao.data_limite,filename)
 
 class Db_Avaliacao (models.Model):
     criterio = models.ForeignKey(Db_Criterios,on_delete=models.PROTECT)
