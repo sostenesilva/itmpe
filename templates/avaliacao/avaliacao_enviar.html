@@ -9,19 +9,19 @@
     </div>
     <hr>
     <div class="row">
-        <form class="col">
+        <form class="col form-control-sm">
             {% csrf_token %}
-            {{ avaliacao_form.as_p }}
+            {{ avaliacao_form }}
         </form>
         <form class="col" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div>
                 <label for="id_arquivo">Anexar documento:</label>
-                <input type="file" class="form-control" name="arquivo" id="id_arquivo">
+                <input type="file" class="form-control form-control-sm" name="arquivo" id="id_arquivo">
             </div>
             <div>
                 <label for="id_anotacao">Inserir anotação:</label>
-                <textarea class="form-control" rows="5" name="anotacao" id="id_anotacao"></textarea>
+                <textarea class="form-control" rows="3" name="anotacao" id="id_anotacao"></textarea>
             </div>
 
             {% if user|has_role:'controle' %}
@@ -81,6 +81,39 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div class="wrapper justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm">
+                    {% if avaliacao_log_hist.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Primeira</span>
+                            </a>
+                        </li>   
+                    {% endif %}
+                
+                    {% for n in avaliacao_log_hist.paginator.page_range %}
+                        {% if avaliacao_log_hist.number == n %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ n }}</span>
+                            </li>
+                        {% elif n > avaliacao_log_hist.number|add:'-3' and n < avaliacao_log_hist.number|add:'3' %}
+                           <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                
+                    {% if avaliacao_log_hist.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ avaliacao_log_hist.paginator.num_pages }}" aria-label="Próxima">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Última</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
 
     </div>
 {% endblock contentdash %}

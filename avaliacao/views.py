@@ -5,6 +5,7 @@ from rolepermissions.roles import assign_role
 from rolepermissions.checkers import has_role
 from ITMPE.roles import Controle
 from rolepermissions.decorators import has_role_decorator
+from django.core.paginator import Paginator
 
 
 #PÁGINAS DE DASHBOARD#
@@ -33,13 +34,13 @@ def dashboard(request):
 def criterios (request):
 
     criterios = models.Db_Criterios.objects.all()
-    #if has_role(request.user, Controle):
-    #    criterios = models.Db_Criterios.objects.all()
-    #else:
-    #    criterios = models.Db_Criterios.objects.filter(responsavel__in = request.user.groups.all())
+
+    criterios_paginator = Paginator(criterios,6)
+    page_num_criterios = request.GET.get('page')
+    page_criterios = criterios_paginator.get_page(page_num_criterios)
  
     context = {
-        'criterios': criterios
+        'criterios': page_criterios
     }
     
     return render(request, 'criterios/criterios.html',context)
@@ -91,8 +92,12 @@ def avaliacao (request):
     else:
         avaliacao = models.Db_Avaliacao.objects.filter(responsavel__in = request.user.groups.all())
 
+    avaliacao_paginator = Paginator(avaliacao,6)
+    page_num_avaliacao = request.GET.get('page')
+    page_avaliacao = avaliacao_paginator.get_page(page_num_avaliacao)
+
     context = {
-        'avaliacao': avaliacao
+        'avaliacao': page_avaliacao
     }
     
     return render(request, 'avaliacao/avaliacao.html', context)
@@ -145,7 +150,6 @@ def avaliacao_enviar(request, avaliacao_pk):
 
     for f in avaliacao_form.fields:
         avaliacao_form.fields[f].disabled = True
-        avaliacao_form.fields[f].required = False
     
     if request.POST:
         if avaliacao_form.is_valid() and (request.FILES.get('arquivo') or request.POST.get('anotacao')):
@@ -169,8 +173,12 @@ def avaliacao_enviar(request, avaliacao_pk):
             return redirect (request.path_info)
 
 
+    avaliacao_log_paginator = Paginator(avaliacao_log_hist,6)
+    page_num_avaliacao_log = request.GET.get('page')
+    page_avaliacao_log = avaliacao_log_paginator.get_page(page_num_avaliacao_log)
+
     context = {
-        'avaliacao_log_hist': avaliacao_log_hist,
+        'avaliacao_log_hist': page_avaliacao_log,
         'avaliacao_form': avaliacao_form
     }
 
