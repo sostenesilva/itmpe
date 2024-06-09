@@ -1,5 +1,5 @@
 from django import forms
-from .models import Db_Criterios, Db_Avaliacao
+from .models import Db_Criterios, Db_Avaliacao, Email_group
 
 class Criterios_form (forms.ModelForm):
     class Meta:
@@ -23,4 +23,14 @@ class Avaliacao_form (forms.ModelForm):
             'responsavel': forms.Select(attrs={'class':'form-control'}),
             'data_limite': forms.DateInput(attrs={'class':'form-control'}),
             'status': forms.Select(attrs={'class':'form-control'}),
+        }
+
+class Email_group_form (forms.ModelForm):
+    class Meta:
+        model = Email_group
+        fields = ('group','email_group')
+
+        widgets = {
+            'group': forms.Select(attrs={'class':'form-control form-sm'}),
+            'email_group': forms.EmailInput(attrs={'class':'form-control form-sm'}),
         }

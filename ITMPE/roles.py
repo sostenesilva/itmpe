@@ -10,12 +10,10 @@ class Controle(AbstractUserRole):
     }
 
 class Administração(AbstractUserRole):
-    name = 'Administração'
     avaliable_permissions = {
     }
 
 class Finanças(AbstractUserRole):
-    name = 'Finanças'
     avaliable_permissions = {
     }
 

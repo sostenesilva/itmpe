@@ -37,6 +37,9 @@ class Db_Avaliacao_log (models.Model):
     dataehora = models.DateTimeField(auto_now=True,blank=True,null=True)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT)
 
+class Email_group (models.Model):
+    group = models.ForeignKey(Group,on_delete=models.CASCADE)
+    email_group = models.EmailField('Email', blank=True, null=True)
 
-    
-
+    def __str__(self):
+        return 'Item {} - {}'.format(self.group.name,self.email_group)

@@ -140,6 +140,7 @@ def avaliacao_delet(request, avaliacao_pk):
     avaliacao.delete()
     return redirect('avaliacao')
 
+
 def avaliacao_enviar(request, avaliacao_pk):
     avaliacao = models.Db_Avaliacao.objects.get(pk=avaliacao_pk)
     avaliacao_log = models.Db_Avaliacao_log(avaliacao=avaliacao)
