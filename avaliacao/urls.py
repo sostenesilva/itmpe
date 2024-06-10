@@ -14,6 +14,6 @@ urlpatterns = [
     path('criterios/editar/<int:criterio_pk>', views.criterios_edit, name='criterios_edit'),
     path('criterios/deletar/<int:criterio_pk>', views.criterios_delet, name='criterios_delet'),
 
-    path('controle/', views.controle, name='controle'),
-    path('secadm/', views.secadm, name='secadm'),
+    # path('controle/', views.controle, name='controle'),
+    # path('secadm/', views.secadm, name='secadm'),
 ]

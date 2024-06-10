@@ -11,37 +11,40 @@
         {% endif %}
     </div>
     <hr>
-    <table class="table table-sm table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Critério</th>
-                <th scope="col">Dimensão</th>
-                <th scope="col">Periodicidade</th>
-                {% if user|has_role:'controle' %}
-                    <th scope="col">Ações</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for criterio in criterios %}
+    <div class="table-responsive">
+        <table class="table table-sm table-striped">
+            <thead>
                 <tr>
-                    <td>{{ criterio.item }}</td>
-                    <td>{{ criterio.criterio }}</td>
-                    <td>{{ criterio.dimensao }}</td>
-                    <td>{{ criterio.periodicidade }}</td>
+                    <th scope="col">Item</th>
+                    <th scope="col">Critério</th>
+                    <th scope="col">Dimensão</th>
+                    <th scope="col">Periodicidade</th>
                     {% if user|has_role:'controle' %}
-                        <td>
-                            <div class='btn-group btn-group-sm' role='group'>
-                                <a href="{% url 'criterios_edit' criterio.id %}" class="btn  btn-secondary"><i class="lni lni-cog"></i></a>
-                                <a href="{% url 'criterios_delet' criterio.id %}" class="btn btn-secondary"><i class="lni lni-eraser"></i></a>
-                            </div>
-                        </td>
+                        <th scope="col">Ações</th>
                     {% endif %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for criterio in criterios %}
+                    <tr>
+                        <td>{{ criterio.item }}</td>
+                        <td>{{ criterio.criterio }}</td>
+                        <td>{{ criterio.dimensao }}</td>
+                        <td>{{ criterio.periodicidade }}</td>
+                        {% if user|has_role:'controle' %}
+                            <td>
+                                <div class='btn-group btn-group-sm' role='group'>
+                                    <a href="{% url 'criterios_edit' criterio.id %}" class="btn  btn-secondary"><i class="lni lni-cog"></i></a>
+                                    <a href="{% url 'criterios_delet' criterio.id %}" class="btn btn-secondary"><i class="lni lni-eraser"></i></a>
+                                </div>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
     <div class="wrapper justify-content-center">
         <nav aria-label="Page navigation">
             <ul class="pagination pagination-sm">

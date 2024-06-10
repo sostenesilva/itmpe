@@ -164,3 +164,25 @@ table{
     padding: 0;
     margin: 0;
 }
+
+.estatistica p{
+    font-size: small;
+    color:black;
+    border-radius: 0 20px 20px 0;
+    background-color:whitesmoke;
+    padding-left: 1rem;
+    margin: 0 0 0.1rem 0;
+}
+
+.titulo-card{
+    font-size:small;
+    color: #FFF;
+    border-radius: 0 20px 20px 0;
+    background-color: #707070;
+    margin:0;
+    padding-left: 0.5rem;
+}
+
+.card-body{
+    
+}
