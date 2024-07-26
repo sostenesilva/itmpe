@@ -25,30 +25,31 @@ class Command(BaseCommand):
         
         for email in Bd_email:
             avaliacoes_group = avaliacoes_pendentes.filter(responsavel = email.group).order_by('data_limite')
-            prazo = avaliacoes_group[0].data_limite - data_atual
-            prazo = prazo.days
-            if prazo == 15 or prazo == 7 or prazo == 3 or prazo == 1:
-                lista_avaliacoes = []
-                for avaliacao in avaliacoes_group:
-                    lista_avaliacoes += ['Data limite: {}/{}/{} - {}'.format(avaliacao.data_limite.day,avaliacao.data_limite.month,avaliacao.data_limite.year,avaliacao.criterio)]
+            if avaliacoes_group:
+                prazo = avaliacoes_group[0].data_limite - data_atual
+                prazo = prazo.days
+                if prazo == 15 or prazo == 7 or prazo == 3 or prazo == 1:
+                    lista_avaliacoes = []
+                    for avaliacao in avaliacoes_group:
+                        lista_avaliacoes += ['Data limite: {}/{}/{} - {}'.format(avaliacao.data_limite.day,avaliacao.data_limite.month,avaliacao.data_limite.year,avaliacao.criterio)]
 
-                context = {
-                    'lista_avaliacoes': lista_avaliacoes,
-                    'prazo':prazo,
-                }
+                    context = {
+                        'lista_avaliacoes': lista_avaliacoes,
+                        'prazo':prazo,
+                    }
 
-                #html_replace = get_template('emails/prazo_avaliacao.html').template
-                html_content = render_to_string('emails/prazo_avaliacao.html',context)
-                text_content = strip_tags(html_content)
-                
-                if prazo == 1:
-                    dias = '1 dia'
-                else:
-                    dias = '{} dias'.format(prazo)
-                
-                email = EmailMultiAlternatives('ITMPe - {} para envio de informações'.format(dias), text_content, settings.EMAIL_HOST_USER, [email.email_group])
-                email.attach_alternative(html_content,'text/html')
-                email.send()
+                    #html_replace = get_template('emails/prazo_avaliacao.html').template
+                    html_content = render_to_string('emails/prazo_avaliacao.html',context)
+                    text_content = strip_tags(html_content)
+                    
+                    if prazo == 1:
+                        dias = '1 dia'
+                    else:
+                        dias = '{} dias'.format(prazo)
+                    
+                    email = EmailMultiAlternatives('ITMPe - {} para envio de informações'.format(dias), text_content, settings.EMAIL_HOST_USER, [email.email_group])
+                    email.attach_alternative(html_content,'text/html')
+                    email.send()
             
         periodicidade = {
             'Mensal': timedelta(days=30),
